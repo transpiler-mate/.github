@@ -22,7 +22,7 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 | Document workflows | [cwl2markdown](https://github.com/transpiler-mate/cwl2markdown) | Markdown pages with workflow details and software metadata. | [Docs](https://transpiler-mate.github.io/cwl2markdown/) |
 | Visualize workflows | [cwl2puml](https://github.com/transpiler-mate/cwl2puml) | PlantUML diagrams, with optional PNG or SVG rendering. | [Docs](https://transpiler-mate.github.io/cwl2puml/) |
 
-### Format conversion
+### Formats conversion
 
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
@@ -43,9 +43,14 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
+| Dereference a CWL document and create a uber-CWL | [bundle](https://github.com/transpiler-mate/transpiler-mate-runtime/) | A bundled, dereferenced CWL document | [Docs](https://transpiler-mate.github.io/transpiler-mate-runtime/reference/bundle-plugin/) |
 | Generate command-line interfaces | [cwl2click](https://github.com/transpiler-mate/cwl2click) | Python Click CLI scaffolding from CWL command-line tools. | [Docs](https://transpiler-mate.github.io/cwl2click/) |
 | Annotate container images | [cwl2oci](https://github.com/transpiler-mate/cwl2oci) | OCI image annotation JSON with software and CWL process metadata. | [Docs](https://transpiler-mate.github.io/cwl2oci/) |
 | Prepare workflow inputs | [cwl2inputs](https://github.com/transpiler-mate/cwl2inputs) | YAML input templates generated with cwltool for a selected CWL process. | [Docs](https://transpiler-mate.github.io/cwl2inputs/) |
+
+### Plugins batch execution
+
+Available since version `1.1.0` of the transpiler-mate-runtime, the [batch](https://transpiler-mate.github.io/transpiler-mate-runtime/reference/batch-plugin/) plugin runs multiple plugin executions sequentially with the same resolved CWL context. An execution plan in YAML specifies the plugins and their inputs.
 
 ## Get started
 

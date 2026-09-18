@@ -8,21 +8,44 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 
 ## What can you do with Transpiler-Mate?
 
+### Analysis and Reporting
+
+| Task | Project | What it provides | Documentation |
+| --- | --- | --- | --- |
+| Inventory container dependencies | [cwl2sbom](https://github.com/transpiler-mate/cwl2sbom) | Local Trivy CycloneDX SBOMs, workflow inventory, image identity lock, and coverage report. | [Docs](https://transpiler-mate.github.io/cwl2sbom/) |
+| Compare two resolved CWL releases and obtain a minimum SemVer increment. | [cwl-baseline-plugin](https://github.com/transpiler-mate/cwl-baseline-plugin) | An explainable JSON report with a minimum SemVer increment | [Docs](https://transpiler-mate.github.io/cwl-baseline-plugin/) |
+
+### Documentation generation
+
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
 | Document workflows | [cwl2markdown](https://github.com/transpiler-mate/cwl2markdown) | Markdown pages with workflow details and software metadata. | [Docs](https://transpiler-mate.github.io/cwl2markdown/) |
 | Visualize workflows | [cwl2puml](https://github.com/transpiler-mate/cwl2puml) | PlantUML diagrams, with optional PNG or SVG rendering. | [Docs](https://transpiler-mate.github.io/cwl2puml/) |
-| Prepare workflow inputs | [cwl2inputs](https://github.com/transpiler-mate/cwl2inputs) | YAML input templates generated with cwltool for a selected CWL process. | [Docs](https://transpiler-mate.github.io/cwl2inputs/) |
-| Generate command-line interfaces | [cwl2click](https://github.com/transpiler-mate/cwl2click) | Python Click CLI scaffolding from CWL command-line tools. | [Docs](https://transpiler-mate.github.io/cwl2click/) |
+
+### Format conversion
+
+| Task | Project | What it provides | Documentation |
+| --- | --- | --- | --- |
 | Describe processing services | [cwl2ogc](https://github.com/transpiler-mate/cwl2ogc) | OGC API – Processes input/output descriptors and JSON Schemas. | [Docs](https://transpiler-mate.github.io/cwl2ogc/) |
 | Describe catalog records | [cwl2ogcrecords](https://github.com/transpiler-mate/cwl2ogcrecords) | CWL as OGC API – Records. | [Docs](https://transpiler-mate.github.io/cwl2ogcrecords/) |
 | Export software metadata | [cwl2codemeta](https://github.com/transpiler-mate/cwl2codemeta) | CodeMeta JSON-LD derived from embedded Schema.org metadata. | [Docs](https://transpiler-mate.github.io/cwl2codemeta/) |
+| Package research objects | [cwl2ro-crate](https://github.com/transpiler-mate/cwl2ro-crate) | Workflow RO-Crates, or Provenance Run Crates from existing CWLProv execution records. | [Docs](https://transpiler-mate.github.io/cwl2ro-crate/) |
+
+### Scientific publication
+
+| Task | Project | What it provides | Documentation |
+| --- | --- | --- | --- |
 | Prepare publication metadata | [cwl2datacite](https://github.com/transpiler-mate/cwl2datacite) | DataCite metadata JSON for workflow software. | [Docs](https://transpiler-mate.github.io/cwl2datacite/) |
 | Generate citations | [cwl2citation](https://github.com/transpiler-mate/cwl2citation) | CFF, BibTeX, RIS, CSL-JSON, and styled text, with configurable CSL styles. | [Docs](https://transpiler-mate.github.io/cwl2citation/) |
-| Package research objects | [cwl2ro-crate](https://github.com/transpiler-mate/cwl2ro-crate) | Workflow RO-Crates, or Provenance Run Crates from existing CWLProv execution records. | [Docs](https://transpiler-mate.github.io/cwl2ro-crate/) |
-| Inventory container dependencies | [cwl2sbom](https://github.com/transpiler-mate/cwl2sbom) | Local Trivy CycloneDX SBOMs, workflow inventory, image identity lock, and coverage report. | [Docs](https://transpiler-mate.github.io/cwl2sbom/) |
-| Annotate container images | [cwl2oci](https://github.com/transpiler-mate/cwl2oci) | OCI image annotation JSON with software and CWL process metadata. | [Docs](https://transpiler-mate.github.io/cwl2oci/) |
 | Publish research software | [invenio-publish](https://github.com/transpiler-mate/invenio-publish) | Records, attachments, DOIs, and new versions in InvenioRDM or Zenodo. | [Docs](https://transpiler-mate.github.io/invenio-publish/) |
+
+### Software generation
+
+| Task | Project | What it provides | Documentation |
+| --- | --- | --- | --- |
+| Generate command-line interfaces | [cwl2click](https://github.com/transpiler-mate/cwl2click) | Python Click CLI scaffolding from CWL command-line tools. | [Docs](https://transpiler-mate.github.io/cwl2click/) |
+| Annotate container images | [cwl2oci](https://github.com/transpiler-mate/cwl2oci) | OCI image annotation JSON with software and CWL process metadata. | [Docs](https://transpiler-mate.github.io/cwl2oci/) |
+| Prepare workflow inputs | [cwl2inputs](https://github.com/transpiler-mate/cwl2inputs) | YAML input templates generated with cwltool for a selected CWL process. | [Docs](https://transpiler-mate.github.io/cwl2inputs/) |
 
 ## Get started
 

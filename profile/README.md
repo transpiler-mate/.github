@@ -8,11 +8,24 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 
 ## What can you do with Transpiler-Mate?
 
-### Analysis and Reporting
+### Inspect the software supply chain
 
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
 | Inventory container dependencies | [cwl2sbom](https://github.com/transpiler-mate/cwl2sbom) | Local Trivy CycloneDX SBOMs, workflow inventory, image identity lock, and coverage report. | [Docs](https://transpiler-mate.github.io/cwl2sbom/) |
+
+With Trivy installed, generate SBOMs for the containers referenced by a selected workflow:
+
+```console
+transpiler-mate cwl2sbom --platform linux/amd64 --output build/sbom 'workflow.cwl#main'
+```
+
+`cwl2sbom` follows nested workflows, inspects declared images with Trivy, and records image identities and coverage gaps. It produces local artifacts for your pipeline: use **ORAS** for OCI publication and attachment, then **Trivy** for downstream vulnerability and license assessment of the exported image SBOMs. Offline vulnerability scanning requires a provisioned database.
+
+See the [offline Trivy scanning guide](https://transpiler-mate.github.io/cwl2sbom/how-to/offline-scanning/) for database preparation, per-image reports, and policy checks.
+
+### Analysis and Reporting
+
 | Compare two resolved CWL releases and obtain a minimum SemVer increment. | [cwl-baseline-plugin](https://github.com/transpiler-mate/cwl-baseline-plugin) | An explainable JSON report with a minimum SemVer increment | [Docs](https://transpiler-mate.github.io/cwl-baseline-plugin/) |
 
 ### Documentation generation
@@ -27,17 +40,29 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
 | Describe processing services | [cwl2ogc](https://github.com/transpiler-mate/cwl2ogc) | OGC API – Processes input/output descriptors and JSON Schemas. | [Docs](https://transpiler-mate.github.io/cwl2ogc/) |
-| Describe catalog records | [cwl2ogcrecords](https://github.com/transpiler-mate/cwl2ogcrecords) | CWL as OGC API – Records. | [Docs](https://transpiler-mate.github.io/cwl2ogcrecords/) |
-| Export software metadata | [cwl2codemeta](https://github.com/transpiler-mate/cwl2codemeta) | CodeMeta JSON-LD derived from embedded Schema.org metadata. | [Docs](https://transpiler-mate.github.io/cwl2codemeta/) |
-| Package research objects | [cwl2ro-crate](https://github.com/transpiler-mate/cwl2ro-crate) | Workflow RO-Crates, or Provenance Run Crates from existing CWLProv execution records. | [Docs](https://transpiler-mate.github.io/cwl2ro-crate/) |
 
-### Scientific publication
+### Support FAIR research software
 
 | Task | Project | What it provides | Documentation |
 | --- | --- | --- | --- |
 | Prepare publication metadata | [cwl2datacite](https://github.com/transpiler-mate/cwl2datacite) | DataCite metadata JSON for workflow software. | [Docs](https://transpiler-mate.github.io/cwl2datacite/) |
 | Generate citations | [cwl2citation](https://github.com/transpiler-mate/cwl2citation) | CFF, BibTeX, RIS, CSL-JSON, and styled text, with configurable CSL styles. | [Docs](https://transpiler-mate.github.io/cwl2citation/) |
 | Publish research software | [invenio-publish](https://github.com/transpiler-mate/invenio-publish) | Records, attachments, DOIs, and new versions in InvenioRDM or Zenodo. | [Docs](https://transpiler-mate.github.io/invenio-publish/) |
+| Package research objects | [cwl2ro-crate](https://github.com/transpiler-mate/cwl2ro-crate) | Workflow RO-Crates, or Provenance Run Crates from existing CWLProv execution records. | [Docs](https://transpiler-mate.github.io/cwl2ro-crate/) |
+| Describe catalog records | [cwl2ogcrecords](https://github.com/transpiler-mate/cwl2ogcrecords) | CWL as OGC API – Records. | [Docs](https://transpiler-mate.github.io/cwl2ogcrecords/) |
+| Export software metadata | [cwl2codemeta](https://github.com/transpiler-mate/cwl2codemeta) | CodeMeta JSON-LD derived from embedded Schema.org metadata. | [Docs](https://transpiler-mate.github.io/cwl2codemeta/) |
+
+Use CodeMeta, DataCite, and OGC Records exports to describe workflows for discovery; provide citations with `cwl2citation`; and package workflows or recorded executions with `cwl2ro-crate`. Input templates, documentation, and diagrams help others understand and reuse the software. `invenio-publish` handles publication to InvenioRDM or Zenodo.
+
+After installing the corresponding plugins alongside the runtime:
+
+```console
+transpiler-mate cwl2inputs --output build/inputs.yaml 'workflow.cwl#main'
+transpiler-mate cwl2citation --output build/citations 'workflow.cwl#main'
+transpiler-mate cwl2rocrate --output build/crate --zip 'workflow.cwl#main'
+```
+
+The `cwl2ro-crate` distribution registers the command `cwl2rocrate`. Its optional `--run` argument accepts an existing CWLProv directory to package execution provenance.
 
 ### Software generation
 
@@ -69,32 +94,6 @@ transpiler-mate cwl2puml --output build/diagrams workflow.cwl
 ```
 
 Installed plugins become subcommands of `transpiler-mate`. Run `transpiler-mate <plugin> --help` for their options. See the [cwl2markdown documentation](https://transpiler-mate.github.io/cwl2markdown/) for a complete metadata example, or explore the [runtime documentation](https://transpiler-mate.github.io/transpiler-mate-runtime/) for loading and bundling CWL documents.
-
-## Support FAIR research software
-
-Use CodeMeta, DataCite, and OGC Records exports to describe workflows for discovery; provide citations with `cwl2citation`; and package workflows or recorded executions with `cwl2ro-crate`. Input templates, documentation, and diagrams help others understand and reuse the software. `invenio-publish` handles publication to InvenioRDM or Zenodo.
-
-After installing the corresponding plugins alongside the runtime:
-
-```console
-transpiler-mate cwl2inputs --output build/inputs.yaml 'workflow.cwl#main'
-transpiler-mate cwl2citation --output build/citations 'workflow.cwl#main'
-transpiler-mate cwl2rocrate --output build/crate --zip 'workflow.cwl#main'
-```
-
-The `cwl2ro-crate` distribution registers the command `cwl2rocrate`. Its optional `--run` argument accepts an existing CWLProv directory to package execution provenance.
-
-## Inspect the software supply chain
-
-With Trivy installed, generate SBOMs for the containers referenced by a selected workflow:
-
-```console
-transpiler-mate cwl2sbom --platform linux/amd64 --output build/sbom 'workflow.cwl#main'
-```
-
-`cwl2sbom` follows nested workflows, inspects declared images with Trivy, and records image identities and coverage gaps. It produces local artifacts for your pipeline: use **ORAS** for OCI publication and attachment, then **Trivy** for downstream vulnerability and license assessment of the exported image SBOMs. Offline vulnerability scanning requires a provisioned database.
-
-See the [offline Trivy scanning guide](https://transpiler-mate.github.io/cwl2sbom/how-to/offline-scanning/) for database preparation, per-image reports, and policy checks.
 
 ## The foundations
 

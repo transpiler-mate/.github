@@ -6,6 +6,27 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 
 [Explore the repositories](https://github.com/orgs/transpiler-mate/repositories) · [Get started](#get-started) · [Build a plugin](#build-a-plugin)
 
+## Get started
+
+Use Python 3.10 or newer. Install the runtime and the plugins you need in the same Python environment:
+
+```bash
+python -m pip install transpiler-mate-runtime cwl2markdown cwl2puml
+transpiler-mate --help
+```
+
+Installed plugins become subcommands of `transpiler-mate`. Run `transpiler-mate <plugin> --help` for their options.
+
+## The foundations
+
+The runtime loads CWL documents, prepares a shared context, and discovers installed plugins. A separate API package defines the contracts that let plugins be developed and distributed independently.
+
+| Project | Role | Documentation |
+| --- | --- | --- |
+| [transpiler-mate-runtime](https://github.com/transpiler-mate/transpiler-mate-runtime) | The `transpiler-mate` CLI, plugin discovery and execution, source loading, and built-in CWL bundling. | [Docs](https://transpiler-mate.github.io/transpiler-mate-runtime/) |
+| [transpiler-mate-api](https://github.com/transpiler-mate/transpiler-mate-api) | Shared plugin contracts and models for plugin authors and runtime implementations. | [Docs](https://transpiler-mate.github.io/transpiler-mate-api/) |
+| [cwl-loader](https://github.com/transpiler-mate/cwl-loader) | Python utilities for loading, normalizing, and serializing CWL documents. | [Docs](https://transpiler-mate.github.io/cwl-loader/) |
+
 ## What can you do with Transpiler-Mate?
 
 ### Inspect the software supply chain
@@ -16,7 +37,7 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 
 With Trivy installed, generate SBOMs for the containers referenced by a selected workflow:
 
-```console
+```bash
 transpiler-mate cwl2sbom --platform linux/amd64 --output build/sbom 'workflow.cwl#main'
 ```
 
@@ -24,9 +45,11 @@ transpiler-mate cwl2sbom --platform linux/amd64 --output build/sbom 'workflow.cw
 
 See the [offline Trivy scanning guide](https://transpiler-mate.github.io/cwl2sbom/how-to/offline-scanning/) for database preparation, per-image reports, and policy checks.
 
-### Analysis and Reporting
+### Analysis and reporting
 
-| Compare two resolved CWL releases and obtain a minimum SemVer increment. | [cwl-baseline-plugin](https://github.com/transpiler-mate/cwl-baseline-plugin) | An explainable JSON report with a minimum SemVer increment | [Docs](https://transpiler-mate.github.io/cwl-baseline-plugin/) |
+| Task | Project | What it provides | Documentation |
+| --- | --- | --- | --- |
+| Compare CWL releases | [cwl-baseline-plugin](https://github.com/transpiler-mate/cwl-baseline-plugin) | An explainable JSON report comparing resolved CWL releases, with a minimum SemVer increment. | [Docs](https://transpiler-mate.github.io/cwl-baseline-plugin/) |
 
 ### Documentation generation
 
@@ -34,6 +57,15 @@ See the [offline Trivy scanning guide](https://transpiler-mate.github.io/cwl2sbo
 | --- | --- | --- | --- |
 | Document workflows | [cwl2markdown](https://github.com/transpiler-mate/cwl2markdown) | Markdown pages with workflow details and software metadata. | [Docs](https://transpiler-mate.github.io/cwl2markdown/) |
 | Visualize workflows | [cwl2puml](https://github.com/transpiler-mate/cwl2puml) | PlantUML diagrams, with optional PNG or SVG rendering. | [Docs](https://transpiler-mate.github.io/cwl2puml/) |
+| Explore workflows interactively | [cwl2webgl](https://github.com/transpiler-mate/cwl2webgl) | A self-contained, offline HTML explorer for workflow dependencies, nested workflows, ports, and step bindings. | [Docs](https://transpiler-mate.github.io/cwl2webgl/) |
+
+With a CWL document containing the required Schema.org `SoftwareApplication` metadata, generate documentation and diagrams:
+
+```bash
+transpiler-mate cwl2markdown --output build/docs workflow.cwl
+transpiler-mate cwl2puml --output build/diagrams workflow.cwl
+transpiler-mate cwl2webgl --output build/diagrams workflow.cwl
+```
 
 ### Formats conversion
 
@@ -56,7 +88,7 @@ Use CodeMeta, DataCite, and OGC Records exports to describe workflows for discov
 
 After installing the corresponding plugins alongside the runtime:
 
-```console
+```bash
 transpiler-mate cwl2inputs --output build/inputs.yaml 'workflow.cwl#main'
 transpiler-mate cwl2citation --output build/citations 'workflow.cwl#main'
 transpiler-mate cwl2rocrate --output build/crate --zip 'workflow.cwl#main'
@@ -72,47 +104,49 @@ The `cwl2ro-crate` distribution registers the command `cwl2rocrate`. Its optiona
 | Generate command-line interfaces | [cwl2click](https://github.com/transpiler-mate/cwl2click) | Python Click CLI scaffolding from CWL command-line tools. | [Docs](https://transpiler-mate.github.io/cwl2click/) |
 | Annotate container images | [cwl2oci](https://github.com/transpiler-mate/cwl2oci) | OCI image annotation JSON with software and CWL process metadata. | [Docs](https://transpiler-mate.github.io/cwl2oci/) |
 | Prepare workflow inputs | [cwl2inputs](https://github.com/transpiler-mate/cwl2inputs) | YAML input templates generated with cwltool for a selected CWL process. | [Docs](https://transpiler-mate.github.io/cwl2inputs/) |
+| Compose Earth observation workflows | [eoap-cwlwrap](https://github.com/EOEPCA/eoap-cwlwrap) | Type-safe composition of CWL steps with stage-in and stage-out patterns, packed into a self-contained CWL document. | [Docs](https://eoepca.github.io/eoap-cwlwrap/) |
+
+## Validate workflow inputs
+
+Validate workflow inputs before execution:
+
+| Project | Role | Documentation |
+| --- | --- | --- |
+| [assertions-mate](https://github.com/transpiler-mate/assertions-mate) | Input validation using JSON Schema, Rego policies, and CQL2 assertions embedded as CWL hints. | [Docs](https://transpiler-mate.github.io/assertions-mate/) |
 
 ### Plugins batch execution
 
-Available since version `1.1.0` of the transpiler-mate-runtime, the [batch](https://transpiler-mate.github.io/transpiler-mate-runtime/reference/batch-plugin/) plugin runs multiple plugin executions sequentially with the same resolved CWL context. An execution plan in YAML specifies the plugins and their inputs.
+> [!WARNING]
+> Available since version **1.1.0** of the transpiler-mate-runtime
 
-## Get started
+The [batch](https://transpiler-mate.github.io/transpiler-mate-runtime/reference/batch-plugin/) plugin runs multiple plugin executions sequentially with the same resolved CWL context. An execution plan in YAML specifies the plugins and their inputs.
 
-Use Python 3.10 or newer. Install the runtime and the plugins you need in the same Python environment:
+Create `tmom.yaml` in your working directory:
 
-```console
-python -m pip install transpiler-mate-runtime cwl2markdown cwl2puml
-transpiler-mate --help
+```yaml
+cwl2sbom:
+- platform: 'linux/amd64'
+  output: 'build/sbom'
+
+cwl2markdown:
+- output: 'build/docs'
+
+cwl2puml:
+- output: 'build/diagrams'
+
+cwl2webgl:
+- output: 'build/diagrams'
+
+baseline:
+- previous: 'released.cwl'
+  output: 'baseline.json'
 ```
 
-With a CWL document containing the required Schema.org `SoftwareApplication` metadata, generate documentation and diagrams:
+Then run:
 
-```console
-transpiler-mate cwl2markdown --output build/docs workflow.cwl
-transpiler-mate cwl2puml --output build/diagrams workflow.cwl
+```bash
+transpiler-mate batch workflow.cwl#main
 ```
-
-Installed plugins become subcommands of `transpiler-mate`. Run `transpiler-mate <plugin> --help` for their options. See the [cwl2markdown documentation](https://transpiler-mate.github.io/cwl2markdown/) for a complete metadata example, or explore the [runtime documentation](https://transpiler-mate.github.io/transpiler-mate-runtime/) for loading and bundling CWL documents.
-
-## The foundations
-
-The runtime loads CWL documents, prepares a shared context, and discovers installed plugins. A separate API package defines the contracts that let plugins be developed and distributed independently.
-
-| Project | Role | Documentation |
-| --- | --- | --- |
-| [transpiler-mate-runtime](https://github.com/transpiler-mate/transpiler-mate-runtime) | The `transpiler-mate` CLI, plugin discovery and execution, source loading, and built-in CWL bundling. | [Docs](https://transpiler-mate.github.io/transpiler-mate-runtime/) |
-| [transpiler-mate-api](https://github.com/transpiler-mate/transpiler-mate-api) | Shared plugin contracts and models for plugin authors and runtime implementations. | [Docs](https://transpiler-mate.github.io/transpiler-mate-api/) |
-| [cwl-loader](https://github.com/transpiler-mate/cwl-loader) | Python utilities for loading, normalizing, and serializing CWL documents. | [Docs](https://transpiler-mate.github.io/cwl-loader/) |
-
-## Author and validate
-
-These companion tools help prepare workflows before conversion or execution:
-
-| Project | Role | Documentation |
-| --- | --- | --- |
-| [cwl-metadata-editor](https://github.com/transpiler-mate/cwl-metadata-editor) | A VS Code extension for editing Schema.org metadata directly in CWL files while preserving surrounding text and formatting. | [Docs](https://transpiler-mate.github.io/cwl-metadata-editor/) |
-| [assertions-mate](https://github.com/transpiler-mate/assertions-mate) | Input validation using JSON Schema, Rego policies, and CQL2 assertions embedded as CWL hints. | [Docs](https://transpiler-mate.github.io/assertions-mate/) |
 
 ## Build a plugin
 

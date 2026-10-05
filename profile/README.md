@@ -2,9 +2,13 @@
 
 **Make CWL workflows easier to discover, cite, reuse, and inspect.**
 
-Transpiler-Mate is a collection of open-source tools built around Common Workflow Language (CWL). Describe your workflow and its software metadata once, then generate documentation, input templates, citations, research objects, service descriptions, and software bills of materials with independent plugins. These artifacts support FAIR research software practices and supply-chain assessment.
+Transpiler-Mate is a collection of open-source tools built around Common Workflow Language (CWL). Describe your workflow and its [Software Application metadata](https://transpiler-mate.github.io/transpiler-mate-api/reference/software-metadata/) once, then generate documentation, input templates, citations, research objects, service descriptions, and software bills of materials with independent plugins. These artifacts support FAIR research software practices and supply-chain assessment.
 
-[Explore the repositories](https://github.com/orgs/transpiler-mate/repositories) · [Get started](#get-started) · [Build a plugin](#build-a-plugin)
+- [Explore the repositories](https://github.com/orgs/transpiler-mate/repositories)
+- [Get started](#get-started)
+- [What can you do with Transpiler-Mate?](#what-can-you-do-with-transpiler-mate)
+- [Build a plugin](#build-a-plugin)
+- [Edit Software Application metadata](https://transpiler-mate.github.io/.github/metadata-generator.html)
 
 ## Get started
 

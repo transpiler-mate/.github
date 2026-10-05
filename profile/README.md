@@ -11,7 +11,7 @@ Transpiler-Mate is a collection of open-source tools built around Common Workflo
 Use Python 3.10 or newer. Install the runtime and the plugins you need in the same Python environment:
 
 ```bash
-python -m pip install transpiler-mate-runtime cwl2markdown cwl2puml
+python -m pip install transpiler-mate-runtime ${TM_PLUGIN_1} ... ${TM_PLUGIN_N}
 transpiler-mate --help
 ```
 
@@ -35,11 +35,7 @@ The runtime loads CWL documents, prepares a shared context, and discovers instal
 | --- | --- | --- | --- |
 | Inventory container dependencies | [cwl2sbom](https://github.com/transpiler-mate/cwl2sbom) | Local Trivy CycloneDX SBOMs, workflow inventory, image identity lock, and coverage report. | [Docs](https://transpiler-mate.github.io/cwl2sbom/) |
 
-With Trivy installed, generate SBOMs for the containers referenced by a selected workflow:
-
-```bash
-transpiler-mate cwl2sbom --platform linux/amd64 --output build/sbom 'workflow.cwl#main'
-```
+With Trivy installed, generate SBOMs for the containers referenced by a selected workflow.
 
 `cwl2sbom` follows nested workflows, inspects declared images with Trivy, and records image identities and coverage gaps. It produces local artifacts for your pipeline: use **ORAS** for OCI publication and attachment, then **Trivy** for downstream vulnerability and license assessment of the exported image SBOMs. Offline vulnerability scanning requires a provisioned database.
 
@@ -59,13 +55,7 @@ See the [offline Trivy scanning guide](https://transpiler-mate.github.io/cwl2sbo
 | Visualize workflows | [cwl2puml](https://github.com/transpiler-mate/cwl2puml) | PlantUML diagrams, with optional PNG or SVG rendering. | [Docs](https://transpiler-mate.github.io/cwl2puml/) |
 | Explore workflows interactively | [cwl2webgl](https://github.com/transpiler-mate/cwl2webgl) | A self-contained, offline HTML explorer for workflow dependencies, nested workflows, ports, and step bindings. | [Docs](https://transpiler-mate.github.io/cwl2webgl/) |
 
-With a CWL document containing the required Schema.org `SoftwareApplication` metadata, generate documentation and diagrams:
-
-```bash
-transpiler-mate cwl2markdown --output build/docs workflow.cwl
-transpiler-mate cwl2puml --output build/diagrams workflow.cwl
-transpiler-mate cwl2webgl --output build/diagrams workflow.cwl
-```
+With a CWL document containing the required Schema.org `SoftwareApplication` metadata, generate documentation and diagrams.
 
 ### Formats conversion
 
@@ -84,15 +74,7 @@ transpiler-mate cwl2webgl --output build/diagrams workflow.cwl
 | Describe catalog records | [cwl2ogcrecords](https://github.com/transpiler-mate/cwl2ogcrecords) | CWL as OGC API – Records. | [Docs](https://transpiler-mate.github.io/cwl2ogcrecords/) |
 | Export software metadata | [cwl2codemeta](https://github.com/transpiler-mate/cwl2codemeta) | CodeMeta JSON-LD derived from embedded Schema.org metadata. | [Docs](https://transpiler-mate.github.io/cwl2codemeta/) |
 
-Use CodeMeta, DataCite, and OGC Records exports to describe workflows for discovery; provide citations with `cwl2citation`; and package workflows or recorded executions with `cwl2ro-crate`. Input templates, documentation, and diagrams help others understand and reuse the software. `invenio-publish` handles publication to InvenioRDM or Zenodo.
-
-After installing the corresponding plugins alongside the runtime:
-
-```bash
-transpiler-mate cwl2inputs --output build/inputs.yaml 'workflow.cwl#main'
-transpiler-mate cwl2citation --output build/citations 'workflow.cwl#main'
-transpiler-mate cwl2rocrate --output build/crate --zip 'workflow.cwl#main'
-```
+Use CodeMeta, DataCite, and OGC Records exports to describe workflows for discovery; provide citations with `cwl2citation`; and package workflows or recorded executions with `cwl2ro-crate`. `invenio-publish` handles publication to InvenioRDM or Zenodo.
 
 The `cwl2ro-crate` distribution registers the command `cwl2rocrate`. Its optional `--run` argument accepts an existing CWLProv directory to package execution provenance.
 
@@ -135,10 +117,10 @@ cwl2puml:
 - output: 'build/diagrams'
 
 cwl2webgl:
-- output: 'build/diagrams'
+- output: 'build/explorers'
 
 baseline:
-- previous: 'released.cwl'
+- previous: 'oci://mycompany.org/released.cwl'
   output: 'baseline.json'
 ```
 

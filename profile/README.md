@@ -90,6 +90,7 @@ The `cwl2ro-crate` distribution registers the command `cwl2rocrate`. Its optiona
 | Generate command-line interfaces | [cwl2click](https://github.com/transpiler-mate/cwl2click) | Python Click CLI scaffolding from CWL command-line tools. | [Docs](https://transpiler-mate.github.io/cwl2click/) |
 | Annotate container images | [cwl2oci](https://github.com/transpiler-mate/cwl2oci) | OCI image annotation JSON with software and CWL process metadata. | [Docs](https://transpiler-mate.github.io/cwl2oci/) |
 | Prepare workflow inputs | [cwl2inputs](https://github.com/transpiler-mate/cwl2inputs) | YAML input templates generated with cwltool for a selected CWL process. | [Docs](https://transpiler-mate.github.io/cwl2inputs/) |
+| Derive MCP tool definitions from CWL processes | [cwl2mcp](https://github.com/transpiler-mate/cwl2mcp) | converts parsed CWL processes into MCP Tool definitions and writes them as JSON | [Docs](https://transpiler-mate.github.io/cwl2mcp/how-to/configure-output/) |
 | Compose Earth observation workflows | [eoap-cwlwrap](https://github.com/EOEPCA/eoap-cwlwrap) | Type-safe composition of CWL steps with stage-in and stage-out patterns, packed into a self-contained CWL document. | [Docs](https://eoepca.github.io/eoap-cwlwrap/) |
 
 ## Validate workflow inputs
